@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { supabase } from '../../utils/supabaseClient';
-import Biography from '../../components/Biography';
-import DrawingCanvas from '../../components/DrawingCanvas';
+import { supabase } from '@/utils/supabaseClient';
+import Biography from '@/components/Biography';
+import DrawingCanvas from '@/components/DrawingCanvas';
 
 export default function ProfilePage() {
   const router = useRouter();

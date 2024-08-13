@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/context/AuthContext'
 import { useGeolocation } from '@/context/GeolocationContext'
-import NearbyProfiles from '../components/NearbyProfiles'
-import LoginForm from '../components/LoginForm'
+import NearbyProfiles from '@/pages/NearbyProfiles'
+import LoginPage from '@/pages/LoginPage'
 
 export default function Home() {
   const { user } = useAuth()
@@ -25,7 +25,7 @@ export default function Home() {
     return (
       <div className="max-w-md mx-auto">
         <h1 className="text-3xl font-bold mb-6">Welcome to Nearby Connect</h1>
-        <LoginForm />
+        <LoginPage />
       </div>
     )
   }

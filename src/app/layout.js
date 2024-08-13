@@ -1,8 +1,8 @@
 import { Inter } from 'next/font/google'
 import { AuthProvider } from '@/context/AuthContext'
 import { GeolocationProvider } from '@/context/GeolocationContext'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+// import Header from '../components/Header'
+// import Footer from '../components/Footer'
 import '../styles/globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -19,11 +19,11 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <GeolocationProvider>
             <div className="flex flex-col min-h-screen">
-              <Header />
+              {/* <Header /> */}
               <main className="flex-grow container mx-auto px-4 py-8">
                 {children}
               </main>
-              <Footer />
+              {/* <Footer /> */}
             </div>
           </GeolocationProvider>
         </AuthProvider>
