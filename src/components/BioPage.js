@@ -127,38 +127,26 @@ export default function BioPage({ profile }) {
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
-      <canvas ref={canvasRef} className="absolute inset-0 z-10 pointer-events-auto" />
-      <div className="absolute inset-0 z-20 pointer-events-none p-8">
-        <h1 className="text-4xl font-bold mb-4">{profile.name}'s Profile</h1>
-        <img src={profile.avatar_url} alt="Profile" className="w-32 h-32 rounded-full mb-4" />
+    <div className="main">
+      <canvas ref={canvasRef} className="canvas" />
+      <div className="description">
+        <h1>{profile.name}'s Profile</h1>
+        <img src={profile.avatar_url} alt="Profile" className="avatar" />
         <div className="bio">
-          <h2 className="text-2xl font-semibold mb-2">About Me</h2>
+          <h2>About Me</h2>
           <p>{profile.bio}</p>
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 z-30 p-4 bg-white">
+      <div className="controls">
         <button onClick={() => addShape('rectangle')}>Add Rectangle</button>
         <button onClick={() => addShape('circle')}>Add Circle</button>
         <button onClick={() => addShape('triangle')}>Add Triangle</button>
         <button onClick={addText}>Add Text</button>
         <input type="file" onChange={addImage} accept="image/*" />
         <button onClick={toggleDrawingMode}>Toggle Drawing Mode</button>
-        <input
-          type="color"
-          onChange={(e) => setDrawingColor(e.target.value)}
-          defaultValue="#000000"
-        />
-        <input
-          type="range"
-          min="1"
-          max="50"
-          defaultValue="5"
-          onChange={(e) => setDrawingWidth(e.target.value)}
-        />
-        <button onClick={deleteSelectedObject} disabled={!activeObject}>
-          Delete Selected
-        </button>
+        <input type="color" onChange={(e) => setDrawingColor(e.target.value)} defaultValue="#000000" />
+        <input type="range" min="1" max="50" defaultValue="5" onChange={(e) => setDrawingWidth(e.target.value)} />
+        <button onClick={deleteSelectedObject} disabled={!activeObject}>Delete Selected</button>
         <button onClick={handleSave}>Save Drawing</button>
       </div>
     </div>

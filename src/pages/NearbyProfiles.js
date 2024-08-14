@@ -52,12 +52,16 @@ export default function NearbyProfiles({ latitude, longitude }) {
   }, [latitude, longitude]);
 
   return (
-    <div>
-      {profiles.map(profile => (
-        <Link href={`/profile/${profile.id}`} key={profile.id}>
-          <div key={profile.id}>{profile.name}</div>
-        </Link> 
-      ))}
+    <div className="main">
+      <ul className="profile-list">
+        {profiles.map(profile => (
+          <li key={profile.id} className="profile-item">
+            <Link href={`/profile/${profile.id}`}>
+              <a>{profile.name}</a>
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

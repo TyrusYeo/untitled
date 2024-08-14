@@ -1,0 +1,26 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  margin: 0 auto;
+  max-width: 600px;
+  width: 100%;
+}
+
+.profile-list {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.profile-item {
+  padding: 1rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.profile-item a {
+  text-decoration: none;
+  color: #0071ff;
+  font-weight: bold;
+}
