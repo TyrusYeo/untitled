@@ -21,7 +21,7 @@ export default function Home() {
   }, [user, location])
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <div className="main">Loading...</div>
   }
 
   // if (!user) {
@@ -35,7 +35,7 @@ export default function Home() {
   // console.log("location", location)
   return (
     <div className="main">
-      <h2>Say hi!</h2>
+      {/* <h2>Say hi</h2> */}
       {location ? (
         <NearbyProfiles latitude={location.latitude} longitude={location.longitude} />
       ) : (

@@ -3,7 +3,8 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import BioPage from '@/components/BioPage';
-import Canvas from '@/components/Canvas';
+import PageTransition from '@/gsap-styling/PageTransition';
+import './id.css';
 
 const hardcodedProfiles = [
   {
@@ -36,11 +37,11 @@ export default function ProfilePage() {
     }
   }, [id]);
 
-  if (!profile) return <div>Loading...</div>;
+  if (!profile) return <div className='main'>Loading...</div>;
 
   return (
-      <div>
-        <BioPage profile={profile} />
-      </div>
+    <PageTransition>
+      <BioPage profile={profile} />
+    </PageTransition>
   );
 }

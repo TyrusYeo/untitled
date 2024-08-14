@@ -8,7 +8,6 @@ import { supabase } from '../utils/supabaseClient';
 export default function BioPage({ profile }) {
   const canvasRef = useRef(null);
   const [canvas, setCanvas] = useState(null);
-  const [activeObject, setActiveObject] = useState(null);
   const [showDrawingControls, setShowDrawingControls] = useState(false);
 
   useEffect(() => {
@@ -38,10 +37,7 @@ export default function BioPage({ profile }) {
 
       loadExistingCanvas();
     }
-
-    fabricCanvas.on('selection:created', (e) => setActiveObject(e.target));
-    fabricCanvas.on('selection:cleared', () => setActiveObject(null));
-    console.log("active object", activeObject)
+   
     const handleResize = () => {
       fabricCanvas.setDimensions({
         width: window.innerWidth,
@@ -56,7 +52,7 @@ export default function BioPage({ profile }) {
       window.removeEventListener('resize', handleResize);
     };
   }, [profile.drawing]);
-
+  
   const addShape = (shapeType) => {
     let shape;
     switch (shapeType) {
@@ -131,12 +127,23 @@ export default function BioPage({ profile }) {
     canvas.freeDrawingBrush.width = parseInt(width);
   };
 
-  const deleteSelectedObject = () => {
+  const deleteSelectedObject = async () => {
     console.log("delete")
-    console.log(activeObject)
-    if (activeObject) {
-      canvas.remove(activeObject);
+    console.log(canvas)
+    if (canvas) {
+      canvas.clear();
       canvas.renderAll();
+
+      const { data, error } = await supabase
+          .storage
+          .from('bio_canvas')
+          .remove(`${profile.uuid}.svg`);
+
+        if (error) {
+          console.error('Error deleting file:', error);
+        } else {
+          console.log('File deleted successfully:', data);
+        }
     }
   };
 
@@ -165,10 +172,11 @@ export default function BioPage({ profile }) {
     <div className="main">
       <canvas ref={canvasRef} className="canvas" />
       <div className="description">
-        <h1>{profile.name}'s Profile</h1>
-        <img src={profile.avatar_url} alt="Profile" className="avatar" />
+        <div>
+        <h1>{profile.name}</h1>
+        </div>
+        {/* <img src={profile.avatar_url} alt="Profile" className="avatar" /> */}
         <div className="bio">
-          <h2>About Me</h2>
           <p>{profile.bio}</p>
         </div>
       </div>
@@ -198,7 +206,7 @@ export default function BioPage({ profile }) {
           {/* <input type="range" min="1" max="50" defaultValue="5" onChange={(e) => setDrawingWidth(e.target.value)} /> */}
         </div>
         )}
-        <button onClick={deleteSelectedObject} disabled={!activeObject}>
+        <button onClick={deleteSelectedObject}>
           <FontAwesomeIcon icon={faTrash} />
         </button>
         <button onClick={handleSave}>

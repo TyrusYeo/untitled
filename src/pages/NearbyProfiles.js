@@ -60,7 +60,7 @@ export default function NearbyProfiles({ latitude, longitude }) {
         {profiles.map(profile => (
           <li key={profile.id} className="profile-item">
             <Link href={`/profile/${profile.id}`}>
-              <div>{profile.name}</div>
+              {profile.name}
             </Link>
           </li>
         ))}
