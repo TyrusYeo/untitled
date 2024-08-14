@@ -2,8 +2,8 @@
 
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import Biography from '@/components/Biography';
-import DrawingCanvas from '@/components/DrawingCanvas';
+import Bio from '@/components/Bio';
+import Canvas from '@/components/Canvas';
 
 // Hardcoded profiles
 const hardcodedProfiles = [
@@ -30,7 +30,6 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (id) {
-      // Find the profile in the hardcoded data
       const foundProfile = hardcodedProfiles.find(p => p.id === id);
       setProfile(foundProfile || null);
     }
@@ -42,8 +41,8 @@ export default function ProfilePage() {
     <div className="profile-page">
       <h1>{profile.name}'s Profile</h1>
       <img src={profile.avatar_url} alt="Profile" className="profile-picture" />
-      <Biography bio={profile.bio} />
-      <DrawingCanvas savedDrawing={profile.drawing} />
+      <Bio bio={profile.bio} />
+      <Canvas savedDrawing={profile.drawing} />
     </div>
   );
 }

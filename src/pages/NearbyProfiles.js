@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { supabase } from '@/utils/supabaseClient';
 
 export default function NearbyProfiles({ latitude, longitude }) {
@@ -53,7 +54,9 @@ export default function NearbyProfiles({ latitude, longitude }) {
   return (
     <div>
       {profiles.map(profile => (
-        <div key={profile.id}>{profile.name}</div>
+        <Link href={`/profile/${profile.id}`} key={profile.id}>
+          <div key={profile.id}>{profile.name}</div>
+        </Link> 
       ))}
     </div>
   );
