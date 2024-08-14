@@ -56,6 +56,7 @@ export default function NearbyProfiles({ latitude, longitude }) {
 
   return (
     <div className="main">
+      <h1>Project Untitled</h1>
       <ul className="profile-list">
         {profiles.map(profile => (
           <li key={profile.id} className="profile-item">

@@ -5,8 +5,8 @@ import { GeolocationProvider } from '@/context/GeolocationContext'
 import './globals.css'
 
 export const metadata = {
-  title: 'Nearby Connect',
-  description: 'Connect with people nearby',
+  title: 'Project Untitled',
+  description: 'Project Untitled',
 }
 
 export default function RootLayout({ children }) {

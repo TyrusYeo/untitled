@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare, faCircle, faDrawPolygon, faTextHeight, faImage, faPaintBrush, faTrash, faSave } from '@fortawesome/free-solid-svg-icons';
 import './BioPage.css'
 import { supabase } from '../utils/supabaseClient';
+import pako from 'pako';
+import { downloadFromStorage, uploadToStorage } from '@/utils/supabaseUtils';
 
 export default function BioPage({ profile }) {
   const canvasRef = useRef(null);
@@ -20,19 +22,13 @@ export default function BioPage({ profile }) {
 
     if (fabricCanvas){
       const loadExistingCanvas = async () => {
-        const { data, error } = await supabase.storage
-          .from('bio_canvas')
-          .download(`${profile.uuid}.svg`);
-       
-        if (error) {
-          console.error('Error downloading SVG:', error);
-        } else {
-          const svgText = await data.text();
-          fabric.loadSVGFromString(svgText, (objects, options) => {
-            const obj = fabric.util.groupSVGElements(objects, options);
-            fabricCanvas.add(obj).renderAll();
-          });
-        }
+        const data = await downloadFromStorage(profile.uuid)
+        if (!data) return 
+        const svgText = await data.text();
+        fabric.loadSVGFromString(svgText, (objects, options) => {
+          const obj = fabric.util.groupSVGElements(objects, options);
+          fabricCanvas.add(obj).renderAll();
+        });
       };
 
       loadExistingCanvas();
@@ -151,20 +147,12 @@ export default function BioPage({ profile }) {
     if (canvas) {
       const svg = canvas.toSVG();
       const blob = new Blob([svg], { type: 'image/svg+xml' });
+      // const compressed = pako.deflate(svg);
+      // const blob = new Blob([compressed], { type: 'application/octet-stream' });
+      // const fileName = `${profile.uuid}.svgz`;
       const fileName = `${profile.uuid}.svg`;
-      console.log(fileName)
-      const { data, error } = await supabase.storage
-        .from('bio_canvas')
-        .upload(fileName, blob, {
-          cacheControl: '3600',
-          upsert: true,
-        });
-  
-      if (error) {
-        console.error('Error uploading SVG:', error);
-      } else {
-        console.log('SVG uploaded successfully:', data);
-      }
+
+      await uploadToStorage(fileName, blob)
     }
   };
 
