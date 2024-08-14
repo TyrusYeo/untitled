@@ -2,15 +2,15 @@
 
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import Bio from '@/components/BioPage';
+import BioPage from '@/components/BioPage';
 import Canvas from '@/components/Canvas';
 
 // Hardcoded profiles
 const hardcodedProfiles = [
   {
     id: "1",
-    name: "Jack",
-    bio: "Hi, I'm Jack!",
+    name: "Tyrus",
+    bio: "Welcome to my multiplayer game ;)",
     avatar_url: "https://example.com/jack.jpg",
     drawing: null
   },
@@ -39,8 +39,7 @@ export default function ProfilePage() {
 
   return (
       <div>
-        <Bio profile={profile} />
-        {/* <Canvas savedDrawing={profile.drawing} /> */}
+        <BioPage profile={profile} />
       </div>
   );
 }

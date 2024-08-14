@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/utils/supabaseClient';
+import './NearbyProfiles.css'
 
 export default function NearbyProfiles({ latitude, longitude }) {
   const [profiles, setProfiles] = useState([]);
@@ -17,11 +18,11 @@ export default function NearbyProfiles({ latitude, longitude }) {
   };
   console.log("profiles", profiles)
   useEffect(() => {
-    fetchProfiles();
+    // fetchProfiles();
     setProfiles([
       {
         id: "1",
-        name: "jack"
+        name: "Tyrus"
       },
       {
         id: "2",
@@ -57,7 +58,7 @@ export default function NearbyProfiles({ latitude, longitude }) {
         {profiles.map(profile => (
           <li key={profile.id} className="profile-item">
             <Link href={`/profile/${profile.id}`}>
-              <a>{profile.name}</a>
+              <div>{profile.name}</div>
             </Link>
           </li>
         ))}

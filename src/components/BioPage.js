@@ -1,10 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { fabric } from 'fabric';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquare, faCircle, faDrawPolygon, faTextHeight, faImage, faPaintBrush, faTrash, faSave } from '@fortawesome/free-solid-svg-icons';
+import './BioPage.css'
 
 export default function BioPage({ profile }) {
   const canvasRef = useRef(null);
   const [canvas, setCanvas] = useState(null);
   const [activeObject, setActiveObject] = useState(null);
+  const [showDrawingControls, setShowDrawingControls] = useState(false);
 
   useEffect(() => {
     const fabricCanvas = new fabric.Canvas(canvasRef.current, {
@@ -23,7 +27,7 @@ export default function BioPage({ profile }) {
 
     fabricCanvas.on('selection:created', (e) => setActiveObject(e.target));
     fabricCanvas.on('selection:cleared', () => setActiveObject(null));
-
+    console.log("active object", activeObject)
     const handleResize = () => {
       fabricCanvas.setDimensions({
         width: window.innerWidth,
@@ -100,6 +104,7 @@ export default function BioPage({ profile }) {
   };
 
   const toggleDrawingMode = () => {
+    setShowDrawingControls(!showDrawingControls);
     canvas.isDrawingMode = !canvas.isDrawingMode;
     canvas.renderAll();
   };
@@ -113,6 +118,8 @@ export default function BioPage({ profile }) {
   };
 
   const deleteSelectedObject = () => {
+    console.log("delete")
+    console.log(activeObject)
     if (activeObject) {
       canvas.remove(activeObject);
       canvas.renderAll();
@@ -138,16 +145,37 @@ export default function BioPage({ profile }) {
         </div>
       </div>
       <div className="controls">
-        <button onClick={() => addShape('rectangle')}>Add Rectangle</button>
-        <button onClick={() => addShape('circle')}>Add Circle</button>
-        <button onClick={() => addShape('triangle')}>Add Triangle</button>
-        <button onClick={addText}>Add Text</button>
-        <input type="file" onChange={addImage} accept="image/*" />
-        <button onClick={toggleDrawingMode}>Toggle Drawing Mode</button>
-        <input type="color" onChange={(e) => setDrawingColor(e.target.value)} defaultValue="#000000" />
-        <input type="range" min="1" max="50" defaultValue="5" onChange={(e) => setDrawingWidth(e.target.value)} />
-        <button onClick={deleteSelectedObject} disabled={!activeObject}>Delete Selected</button>
-        <button onClick={handleSave}>Save Drawing</button>
+        <button onClick={() => addShape('rectangle')}>
+          <FontAwesomeIcon icon={faSquare} />
+        </button>
+        <button onClick={() => addShape('circle')}>
+          <FontAwesomeIcon icon={faCircle} />
+        </button>
+        <button onClick={() => addShape('triangle')}>
+          <FontAwesomeIcon icon={faDrawPolygon} />
+        </button>
+        <button onClick={addText}>
+          <FontAwesomeIcon icon={faTextHeight} />
+        </button>
+        <input type="file" onChange={addImage} accept="image/*" style={{ display: 'none' }} id="upload-image" />
+        <label htmlFor="upload-image">
+          <FontAwesomeIcon icon={faImage} />
+        </label>
+        <button onClick={toggleDrawingMode}>
+          <FontAwesomeIcon icon={faPaintBrush} />
+        </button>
+        {showDrawingControls && (
+          <div className="color-palette">
+          <input type="color" onChange={(e) => setDrawingColor(e.target.value)} defaultValue="#000000" />
+          {/* <input type="range" min="1" max="50" defaultValue="5" onChange={(e) => setDrawingWidth(e.target.value)} /> */}
+        </div>
+        )}
+        <button onClick={deleteSelectedObject} disabled={!activeObject}>
+          <FontAwesomeIcon icon={faTrash} />
+        </button>
+        <button onClick={handleSave}>
+          <FontAwesomeIcon icon={faSave} />
+        </button>
       </div>
     </div>
   );
