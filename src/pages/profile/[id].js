@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import Bio from '@/components/Bio';
+import Bio from '@/components/BioPage';
 import Canvas from '@/components/Canvas';
 
 // Hardcoded profiles
@@ -38,11 +38,9 @@ export default function ProfilePage() {
   if (!profile) return <div>Loading...</div>;
 
   return (
-    <div className="profile-page">
-      <h1>{profile.name}'s Profile</h1>
-      <img src={profile.avatar_url} alt="Profile" className="profile-picture" />
-      <Bio bio={profile.bio} />
-      <Canvas savedDrawing={profile.drawing} />
-    </div>
+      <div>
+        <Bio profile={profile} />
+        {/* <Canvas savedDrawing={profile.drawing} /> */}
+      </div>
   );
 }
