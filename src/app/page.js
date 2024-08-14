@@ -12,7 +12,10 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    if (user !== undefined && location !== null) {
+    // if (user !== undefined && location !== null) {
+    //   setIsLoading(false)
+    // }
+    if (location !== null) {
       setIsLoading(false)
     }
   }, [user, location])
@@ -21,18 +24,18 @@ export default function Home() {
     return <div>Loading...</div>
   }
 
-  if (!user) {
-    return (
-      <div className="max-w-md mx-auto">
-        <h1 className="text-3xl font-bold mb-6">Welcome to Nearby Connect</h1>
-        <LoginPage />
-      </div>
-    )
-  }
-
+  // if (!user) {
+  //   return (
+  //     <div className="max-w-md mx-auto">
+  //       <h1 className="text-3xl font-bold mb-6">Welcome to Nearby Connect</h1>
+  //       <LoginPage />
+  //     </div>
+  //   )
+  // }
+  // console.log("location", location)
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-6">Nearby Profiles</h1>
+      <h2>Say hi!</h2>
       {location ? (
         <NearbyProfiles latitude={location.latitude} longitude={location.longitude} />
       ) : (

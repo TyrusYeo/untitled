@@ -3,7 +3,7 @@ import { AuthProvider } from '@/context/AuthContext'
 import { GeolocationProvider } from '@/context/GeolocationContext'
 // import Header from '../components/Header'
 // import Footer from '../components/Footer'
-import '../styles/globals.css'
+// import '../styles/globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
