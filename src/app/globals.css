@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&display=swap');
 :root {
   --max-width: 600px;
   --border-radius: 12px;
@@ -93,7 +94,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-  font-family: Arial, sans-serif;
+    font-family: Literata, serif;
 }
 
 a {

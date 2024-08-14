@@ -34,7 +34,7 @@ export default function Home() {
   // }
   // console.log("location", location)
   return (
-      <div className="main">
+    <div className="main">
       <h2>Say hi!</h2>
       {location ? (
         <NearbyProfiles latitude={location.latitude} longitude={location.longitude} />

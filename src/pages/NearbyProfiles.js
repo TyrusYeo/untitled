@@ -22,10 +22,12 @@ export default function NearbyProfiles({ latitude, longitude }) {
     setProfiles([
       {
         id: "1",
+        uuid: "0a9cbbb9-7c64-4e97-ae31-86e9f7178437",
         name: "Tyrus"
       },
       {
         id: "2",
+        uuid: "f1496acf-50d8-4d85-a909-3cdb0edadb69",
         name: "jayce"
       },
     ])

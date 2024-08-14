@@ -3,6 +3,7 @@ import { fabric } from 'fabric';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare, faCircle, faDrawPolygon, faTextHeight, faImage, faPaintBrush, faTrash, faSave } from '@fortawesome/free-solid-svg-icons';
 import './BioPage.css'
+import { supabase } from '../utils/supabaseClient';
 
 export default function BioPage({ profile }) {
   const canvasRef = useRef(null);
@@ -18,11 +19,24 @@ export default function BioPage({ profile }) {
     });
     setCanvas(fabricCanvas);
 
-    if (profile.drawing) {
-      fabric.loadSVGFromString(profile.drawing, (objects, options) => {
-        const obj = fabric.util.groupSVGElements(objects, options);
-        fabricCanvas.add(obj).renderAll();
-      });
+    if (fabricCanvas){
+      const loadExistingCanvas = async () => {
+        const { data, error } = await supabase.storage
+          .from('bio_canvas')
+          .download(`${profile.uuid}.svg`);
+       
+        if (error) {
+          console.error('Error downloading SVG:', error);
+        } else {
+          const svgText = await data.text();
+          fabric.loadSVGFromString(svgText, (objects, options) => {
+            const obj = fabric.util.groupSVGElements(objects, options);
+            fabricCanvas.add(obj).renderAll();
+          });
+        }
+      };
+
+      loadExistingCanvas();
     }
 
     fabricCanvas.on('selection:created', (e) => setActiveObject(e.target));
@@ -129,7 +143,21 @@ export default function BioPage({ profile }) {
   const handleSave = async () => {
     if (canvas) {
       const svg = canvas.toSVG();
-      // Save SVG to Supabase storage or wherever needed
+      const blob = new Blob([svg], { type: 'image/svg+xml' });
+      const fileName = `${profile.uuid}.svg`;
+      console.log(fileName)
+      const { data, error } = await supabase.storage
+        .from('bio_canvas')
+        .upload(fileName, blob, {
+          cacheControl: '3600',
+          upsert: true,
+        });
+  
+      if (error) {
+        console.error('Error uploading SVG:', error);
+      } else {
+        console.log('SVG uploaded successfully:', data);
+      }
     }
   };
 

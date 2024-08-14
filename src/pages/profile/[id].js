@@ -5,10 +5,10 @@ import { useEffect, useState } from 'react';
 import BioPage from '@/components/BioPage';
 import Canvas from '@/components/Canvas';
 
-// Hardcoded profiles
 const hardcodedProfiles = [
   {
     id: "1",
+    uuid: "0a9cbbb9-7c64-4e97-ae31-86e9f7178437",
     name: "Tyrus",
     bio: "Welcome to my multiplayer game ;)",
     avatar_url: "https://example.com/jack.jpg",
@@ -16,6 +16,7 @@ const hardcodedProfiles = [
   },
   {
     id: "2",
+    uuid: "f1496acf-50d8-4d85-a909-3cdb0edadb69",
     name: "Jayce",
     bio: "Hello, I'm Jayce!",
     avatar_url: "https://example.com/jayce.jpg",
